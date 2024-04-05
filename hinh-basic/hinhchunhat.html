@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple 2D Rectangle with Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+
+        // Khởi tạo scene, camera và renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10); // Không gian hình học 2D
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Tạo hình chữ nhật
+        const width = 0.5;
+        const height = 0.3;
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(-width / 2, height / 2, 0),  // Đỉnh trên bên trái
+            new THREE.Vector3(width / 2, height / 2, 0),   // Đỉnh trên bên phải
+            new THREE.Vector3(width / 2, -height / 2, 0),  // Đỉnh dưới bên phải
+            new THREE.Vector3(-width / 2, -height / 2, 0), // Đỉnh dưới bên trái
+            new THREE.Vector3(-width / 2, height / 2, 0)   // Kết thúc với đỉnh trên bên trái
+        ]);
+        const material = new THREE.LineBasicMaterial({ color: 0x00ff00 }); // Màu và loại vật liệu
+        const rectangle = new THREE.Line(geometry, material);
+        scene.add(rectangle);
+
+        // Di chuyển camera ra xa hình chữ nhật để nhìn thấy nó
+        camera.position.z = 1;
+        // Render hình chữ nhật trong vòng lặp animation
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

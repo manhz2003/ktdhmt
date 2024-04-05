@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple 2D Square with Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Khởi tạo scene, camera và renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10); // Không gian hình học 2D
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerHeight, window.innerHeight); // Đảm bảo cửa sổ hiển thị là một hình vuông
+        document.body.appendChild(renderer.domElement);
+
+        // Tạo hình vuông
+        const size = 0.5;
+        const geometry = new THREE.PlaneGeometry(size, size);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
+        const square = new THREE.Mesh(geometry, material);
+        scene.add(square);
+
+        // Đặt camera sao cho nhìn từ phía trước hình vuông
+        camera.position.z = 1;
+
+        // Render hình vuông trong vòng lặp animation
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>

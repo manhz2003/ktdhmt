@@ -1,0 +1,42 @@
+!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Triangle with Three.js</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Khởi tạo scene, camera và renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Tạo hình tam giác
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 1, 0),   // Đỉnh trên
+            new THREE.Vector3(-1, -1, 0), // Đỉnh dưới bên trái
+            new THREE.Vector3(1, -1, 0)   // Đỉnh dưới bên phải
+        ]);
+        const material = new THREE.LineBasicMaterial({ color: 0x00ff00 }); // Màu và loại vật liệu
+        const triangle = new THREE.LineLoop(geometry, material); // LineLoop để kết nối vòng quanh các đỉnh
+        scene.add(triangle);
+
+        // Di chuyển camera ra xa tam giác để nhìn thấy nó
+        camera.position.z = 5;
+
+        // Render tam giác trong vòng lặp animation
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
